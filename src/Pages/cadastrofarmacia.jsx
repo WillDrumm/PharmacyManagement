@@ -53,11 +53,15 @@ export default function CadastroFarmacia() {
   }, [farmacia.endereco]);
 
   function salvarFarmacia(e) {
+    e.preventDefault();
     let save = JSON.parse(localStorage.getItem("farmacia")) ?? [];
     save.push(farmacia);
     localStorage.setItem("farmacia", JSON.stringify(save));
-    e.preventDefault();
+
+    // informe o usuário que a farmácia foi cadastrada
+    alert("Farmácia cadastrada com sucesso!");
   }
+
   return (
     <div>
       <div>
@@ -111,12 +115,15 @@ export default function CadastroFarmacia() {
           </div>
         </nav>
       </div>
+
+      {/* lembre de validar os campos, conforme observações na página de cadastro de medicamentos */}
       <form onSubmit={salvarFarmacia} class="row g-3">
         <div class="col-md-2">
           <label for="RazaoSocial" class="form-label">
             Razão Social
           </label>
           <input
+            required
             type="text"
             class="form-control"
             id="razaoSocial"
@@ -308,7 +315,9 @@ export default function CadastroFarmacia() {
         </div>
 
         <div class="col-12 d-flex justify-content-end d-grid gap-3 botaoForm">
-          <button type="submit" class="btn btn-primary">
+
+          {/*  não podemos ter 2 botões submit... veja observações na página de cadastro de medicamento */}
+          <button class="btn btn-primary">
             Limpar
           </button>
 
@@ -316,7 +325,6 @@ export default function CadastroFarmacia() {
             Salvar
           </button>
         </div>
-        {console.log(farmacia)}
       </form>
     </div>
   );

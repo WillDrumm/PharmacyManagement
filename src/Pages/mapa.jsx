@@ -4,6 +4,7 @@ import logo from "../Images/logo.png";
 import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
 
 const mapa = () => {
+  // lembre de dar nomes melhores para as variáveis - nesse caso é uma lista de farmácias
   let farmacia = JSON.parse(localStorage.getItem("farmacia")) ?? [];
 
   return (

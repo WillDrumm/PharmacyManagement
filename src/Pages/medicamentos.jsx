@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "../Images/logo.png";
+import NavBar from "../Components/NavBar";
+
 export default function Medicamentos() {
+  // a lógica está correta, mas o nome da variável não é muito intuitivo (é um medicamento e não uma lista de medicamentos)
   const [medicamentos, setMedicamentos] = useState({
     nome: "",
     laboratorios: "",
@@ -12,70 +13,44 @@ export default function Medicamentos() {
   });
 
   function salvarMedicamentos(e) {
+    e.preventDefault();
     let save = JSON.parse(localStorage.getItem("medicamentos")) ?? [];
     save.push(medicamentos);
     localStorage.setItem("medicamentos", JSON.stringify(save));
-    e.preventDefault();
+
+    // lembre de informar ao usuário que o medicamento foi salvo
+    alert("Medicamento salvo com sucesso!");
+
+    // limpar o formulário
+    limparFormulario();
+  }
+
+  function limparFormulario() {
+    setMedicamentos({
+      nome: "",
+      laboratorios: "",
+      tipo: "",
+      dosagem: "",
+      precoUnitario: "",
+      descricao: "",
+    });
   }
 
   return (
     <div>
-      {console.log(medicamentos)}
-      <div>
-        <nav class="navbar navbar-expand-lg bg-light">
-          <div class="container-fluid">
-            <img src={logo} width="200px" alt="logo" />
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active text-white"
-                    aria-current="page"
-                    href="#"
-                  ></a>
-                </li>
-              </ul>
-            </div>
-            <div className="botoes">
-              <Link to="/cadastrofarmacia">
-                <button type="button" class="btn btn-success menu">
-                  Cadastro Farmácia
-                </button>
-              </Link>
-              <button type="button" class="btn btn-success menu">
-                Cadastro Medicamento
-              </button>
-              <Link to="/mapa">
-                <button type="button" class="btn btn-success menu">
-                  Mapa
-                </button>
-              </Link>
-              <Link to="/listamedicamentos">
-                <button type="button" class="btn btn-success menu">
-                  Medicamentos
-                </button>
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </div>
+      {/* Como o código da nav se repete, crie um componente e o chame no local adequado de cada página */}
+      <NavBar />
+
+      {/* Lembre-se de validar cada input do formulário que o usuário precisa preenchar, por exemplo o nome do medicamento */}
       <form onSubmit={salvarMedicamentos} class="row g-3">
         <div class="col-md-4">
           <label for="medicamentos" class="form-label">
             Medicamento
           </label>
+
+          {/* para validar (tornar obrigatório o campo) basta inserir a propriedade required */}
           <input
+            required
             type="text"
             class="form-control"
             id="medicamentos"
@@ -104,6 +79,7 @@ export default function Medicamentos() {
           <label for="tipo" class="form-label">
             Tipo
           </label>
+          {/* Nesse caso deveria ser um select com as opções de medicamento controlado e comum */}
           <input
             type="text"
             class="form-control"
@@ -133,7 +109,8 @@ export default function Medicamentos() {
             Preço unitário
           </label>
           <input
-            type="text"
+            // Por ser um componente de preço, o ideal é usar um input do tipo number
+            type="number"
             class="form-control"
             id="precoUnitario"
             value={medicamentos.precoUnitario}
@@ -162,10 +139,14 @@ export default function Medicamentos() {
         </div>
 
         <div class="col-12 d-flex justify-content-end d-grid gap-3 botaoForm">
-          <button type="submit" class="btn btn-primary">
+          {/* Não podem haver 2 botões do type submit em um formulário, nessão todos eles terão a função do cadastro */}
+          {/* Você deveria chamar uma função que limpa de fato os campos do formulário */}
+          <button
+            class="btn btn-primary"
+            onClick={limparFormulario}
+          >
             Limpar
           </button>
-
           <button type="submit" class="btn btn-primary">
             Salvar
           </button>
