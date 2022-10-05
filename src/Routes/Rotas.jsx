@@ -10,10 +10,14 @@ export default function Rotas() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+
+        {/* crie uma rota privada e envolve as rotas abaixo */}
         <Route path="/cadastrofarmacia" element={<CadastroFarmacia />} />
         <Route path="/medicamentos" element={<Medicamentos />} />
         <Route path="/listamedicamentos" element={<ListaMedicamento />} />
         <Route path="/mapa" element={<Mapa />} />
+
+        {/* e também crie uma rota para compononentes não econtrados */}
       </Routes>
     </BrowserRouter>
   );

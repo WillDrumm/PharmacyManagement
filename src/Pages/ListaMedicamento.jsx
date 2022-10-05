@@ -5,6 +5,8 @@ const ListaMedicamento = () => {
   const medicamento = JSON.parse(localStorage.getItem("medicamentos")) ?? [];
   return (
     <div>
+
+      {/* lembre de deletar essa parte do código e chamar o componente Navbar */}
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
           <img src={logo} width="200px" alt="logo" />
@@ -54,11 +56,15 @@ const ListaMedicamento = () => {
           </div>
         </div>
       </nav>
+
+
       <div className="boxMedicamentos">
         {medicamento.map((medicamento) => (
+          // cada item de um map precisa de uma key
           <div
             class="card text-bg-light mb-3 cardMedicamento"
             style={{ width: "20rem" }}
+            key={medicamento.nome}
           >
             <img
               src="https://site.abcfarma.org.br/wp-content/uploads/2019/10/med-gen.jpg"
